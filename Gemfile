@@ -9,6 +9,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'bcrypt'
 gem 'bootstrap-sass'
+gem 'faker'
 
 group :development, :test do
   gem "rspec-rails"
