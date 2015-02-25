@@ -8,6 +8,10 @@ class PeopleController < ApplicationController
     @person = Person.new
   end
 
+  def edit
+    @person = Person.find(params[:id])
+  end
+
   def show
     @person = Person.find(params[:id])
   end
@@ -18,6 +22,15 @@ class PeopleController < ApplicationController
       redirect_to root_path, notice: "Person was created!"
     else
       render :new
+    end
+  end
+
+  def update
+    @person = Person.find(params[:id])
+    if @person.update(params.require(:person).permit(:first_name, :last_name, :title))
+      redirect_to people_path
+    else
+      render :edit
     end
   end
 

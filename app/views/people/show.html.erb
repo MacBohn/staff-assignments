@@ -1,1 +1,6 @@
-<h1> <%= @person.full_name %> </h1>
+<div class="page-header">
+  <div class="pull-right">
+    <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-info' %>
+  </div>
+  <h1> <%= @person.full_name %> </h1>
+</div>
