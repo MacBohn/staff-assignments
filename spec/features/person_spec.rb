@@ -69,4 +69,33 @@ feature 'Person -' do
     expect(page).to have_content('Title or First Name must be entered')
   end
 
+  scenario "Users can assign people to locations" do
+    create_location(name: "Northwest")
+    create_user email: "user@example.com"
+    person = create_person
+
+    visit root_path
+
+    fill_in "Email", with: "user@example.com"
+    fill_in "Password", with: "password"
+    click_on "Login"
+    click_on person.full_name
+    click_on "+ Add Location"
+
+    expect(page).to have_content("Assign #{person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
+
+    within '.page-header' do
+      expect(page).to have_content(person.full_name)
+    end
+
+    within '.table' do
+      expect(page).to have_content("Northwest")
+      expect(page).to have_content("Boss Man")
+    end
+
+end
+
 end
