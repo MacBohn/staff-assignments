@@ -96,27 +96,76 @@ feature 'Person -' do
       expect(page).to have_content("Boss Man")
     end
 
-end
+  end
 
-scenario "People cannot be assigne to the same location with the same role" do
-  create_location(name: "Northwest")
-  login
-  click_on @person.full_name
-  click_on "+ Add Location"
+  scenario "People cannot be assigne to the same location with the same role" do
+    create_location(name: "Northwest")
+    login
+    click_on @person.full_name
+    click_on "+ Add Location"
 
-  expect(page).to have_content("Assign #{@person.full_name} a Location")
-  select "Northwest", from: "assignment_location_id"
-  fill_in 'Role', :with => 'Boss Man'
-  click_on 'Assign'
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
 
-  click_on "+ Add Location"
+    click_on "+ Add Location"
 
-  expect(page).to have_content("Assign #{@person.full_name} a Location")
-  select "Northwest", from: "assignment_location_id"
-  fill_in 'Role', :with => 'Boss Man'
-  click_on 'Assign'
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
 
-  expect(page).to have_content("You cannot add the same role to the same location")
-end
+    expect(page).to have_content("You cannot add the same role to the same location")
+  end
+
+  scenario "Users can edit assignments" do
+    create_location(name: "Northwest")
+    create_location(name: "Southwest")
+    login
+
+    click_on @person.full_name
+    click_on "+ Add Location"
+
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
+
+    click_on "edit"
+
+    expect(page).to have_content("Edit #{@person.full_name} a Location")
+    select "Southwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Client'
+    click_on 'Update'
+
+    expect(page).to have_content("Client")
+    expect(page).to have_content("Southwest")
+
+    expect(page).to have_no_content("Northwest")
+    expect(page).to have_no_content("Boss Man")
+
+  end
+
+  scenario "Users can delete assignments" do
+    create_location(name: "Northwest")
+    create_location(name: "Southwest")
+    login
+
+    click_on @person.full_name
+    click_on "+ Add Location"
+
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
+
+    click_on "Delete"
+
+expect(page).to have_no_content("Boss Man")
+
+
+
+  end
 
 end

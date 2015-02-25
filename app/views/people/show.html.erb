@@ -25,6 +25,10 @@
       <th>
         <%= assignment.role %>
       </th>
+      <th>
+        <%= link_to "edit", edit_person_assignment_path(@person, assignment) %>
+        <%= link_to "Delete", person_assignment_path(@person, assignment), method: :delete, data: {confirm: "Are You Sure"} %>
+      </th>
       <% end %>
     </tr>
   </tbody>
