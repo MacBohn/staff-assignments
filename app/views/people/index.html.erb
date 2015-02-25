@@ -9,14 +9,14 @@
   <thead>
   <tr>
     <th>Name</th>
+    <th>Location Count</th>
   </tr>
   </thead>
   <tbody>
   <% @people.each do |person| %>
     <tr>
-      <td>
-        <%= link_to person.full_name, person_path(person) %>
-      </td>
+      <td><%= link_to person.full_name, person_path(person) %></td>
+      <td><%= person.assignments.count%></td>
     </tr>
   <% end %>
   </tbody>

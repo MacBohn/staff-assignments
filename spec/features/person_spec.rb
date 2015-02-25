@@ -162,9 +162,34 @@ feature 'Person -' do
 
     click_on "Delete"
 
-expect(page).to have_no_content("Boss Man")
+    expect(page).to have_no_content("Boss Man")
+  end
 
 
+  scenario "Users can see assignment count on home page" do
+    create_location(name: "Northwest")
+    create_location(name: "Southwest")
+    login
+
+    click_on @person.full_name
+    click_on "+ Add Location"
+
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Northwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Boss Man'
+    click_on 'Assign'
+    visit root_path
+    expect(page).to have_content("1")
+
+    click_on @person.full_name
+    click_on "+ Add Location"
+
+    expect(page).to have_content("Assign #{@person.full_name} a Location")
+    select "Southwest", from: "assignment_location_id"
+    fill_in 'Role', :with => 'Client'
+    click_on 'Assign'
+    visit root_path
+    expect(page).to have_content("2")
 
   end
 
