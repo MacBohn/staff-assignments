@@ -1,0 +1,33 @@
+<div class= "page-header">
+  <h1>Assign <%= @person.full_name %> a Location</h1>
+</div>
+
+<%= form_for [@person, @assignment], html: {class: 'form-horizontal'} do |f| %>
+  <% if @assignment.errors.any? %>
+    <div class="row">
+      <div class="col-md-offset-2 col-md-4">
+        <div class="alert alert-danger">
+          <ul>
+          <% @assignment.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<div class= "form-group">
+  <%= f.label :location_id %>
+  <%= f.collection_select :location_id, Location.all, :id, :name, {iclude_black: true}, {class: "form-control"} %>
+</div>
+
+<div class= "form-group">
+  <%= f.label :role %>
+  <%= f.text_field :role, class: "form-control" %>
+</div>
+
+<div class= "form-group">
+  <%= f.submit 'Assign', class: 'btn btn-primary' %>
+</div>
+<% end %>

@@ -14,3 +14,9 @@ def create_person(overrides = {})
     last_name: Faker::Name.last_name,
   }.merge(overrides))
 end
+
+def create_location(overrides = {})
+  Location.create!({
+    name: Faker::Address.country
+  }.merge(overrides))
+end

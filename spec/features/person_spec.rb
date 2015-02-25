@@ -98,4 +98,25 @@ feature 'Person -' do
 
 end
 
+scenario "People cannot be assigne to the same location with the same role" do
+  create_location(name: "Northwest")
+  login
+  click_on @person.full_name
+  click_on "+ Add Location"
+
+  expect(page).to have_content("Assign #{@person.full_name} a Location")
+  select "Northwest", from: "assignment_location_id"
+  fill_in 'Role', :with => 'Boss Man'
+  click_on 'Assign'
+
+  click_on "+ Add Location"
+
+  expect(page).to have_content("Assign #{@person.full_name} a Location")
+  select "Northwest", from: "assignment_location_id"
+  fill_in 'Role', :with => 'Boss Man'
+  click_on 'Assign'
+
+  expect(page).to have_content("You cannot add the same role to the same location")
+end
+
 end

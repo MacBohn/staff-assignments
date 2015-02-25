@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  has_many :assignments
 
   validates_presence_of :last_name
   validate :first_name_or_title

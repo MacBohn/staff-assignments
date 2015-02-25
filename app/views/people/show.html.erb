@@ -1,6 +1,31 @@
 <div class="page-header">
   <div class="pull-right">
     <%= link_to 'Edit', edit_person_path(@person), class: 'btn btn-info' %>
+    <%= link_to '+ Add Location', new_person_assignment_path(@person), class: 'btn btn-info' %>
+
   </div>
   <h1> <%= @person.full_name %> </h1>
 </div>
+
+<table class='table'>
+  <thead>
+    <th>
+      Location
+    </th>
+    <th>
+      Role
+    </th>
+  </thead>
+  <tbody>
+    <% @person.assignments.each do |assignment| %>
+    <tr>
+      <th>
+        <%= assignment.location.name %>
+      </th>
+      <th>
+        <%= assignment.role %>
+      </th>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
